@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import UpdateTodoModal from './UpdateTodoModal';
 
 const MyTodos = () => {
     const [todos, setTodos] = useState([]);
+    const [updatingTodo, setUpdatingTodo] = useState(null);
 
     useEffect(() => {
         fetch('http://localhost:5000/todo')
@@ -78,6 +80,17 @@ const MyTodos = () => {
                                                 :
                                                 <button onClick={() => handleComplete(todo._id)} className='btn btn-primary btn-outline'>Complete</button>
                                         }
+                                        {
+                                            todo.isCompleted ||
+                                            <label
+                                                htmlFor="update-todo-modal"
+                                                onClick={() => setUpdatingTodo(todo)}
+                                                className="btn btn-accent btn-outline"
+                                            >
+                                                Update
+                                            </label>
+                                        }
+
                                         <button onClick={() => handleDelete(todo._id)} className='btn btn-error btn-outline'>Delete</button>
                                     </td>
                                 </tr>)
@@ -85,6 +98,14 @@ const MyTodos = () => {
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div>
+                {
+                    updatingTodo && <UpdateTodoModal
+                        updatingTodo={updatingTodo}
+                        setUpdatingTodo={setUpdatingTodo}
+                    />
+                }
             </div>
         </section >
     );
