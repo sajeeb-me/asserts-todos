@@ -26,6 +26,25 @@ const MyTodos = () => {
                 console.log(data);
             })
     }
+
+    const handleComplete = id => {
+        const time = new Date();
+        console.log(time);
+        fetch(`http://localhost:5000/todo/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify({ time })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount) {
+                    toast.success("YAY! You've completed your todo successfully!")
+                }
+            })
+    }
+
     return (
         <section className='bg-slate-100 p-4 lg:p-8 h-screen'>
             <div>
@@ -44,12 +63,21 @@ const MyTodos = () => {
                         <tbody>
                             {
                                 todos.map((todo, index) => <tr key={todo._id} className='hover'>
-                                    <th>{index + 1}</th>
-                                    <td>{todo.heading}</td>
-                                    <td>{todo.date}</td>
-                                    <td>{todo.description}</td>
+                                    <th className={todo.isCompleted ? 'line-through opacity-60' : ''}>{index + 1}</th>
+                                    <td className={todo.isCompleted ? 'line-through opacity-60' : ''}>{todo.heading}</td>
+                                    <td className={todo.isCompleted ? 'line-through opacity-60' : ''}>{todo.date}</td>
+                                    <td className={todo.isCompleted ? 'line-through opacity-60' : ''}>{todo.description}</td>
                                     <td className='flex justify-center gap-4'>
-                                        <button className='btn btn-primary btn-outline'>Complete</button>
+                                        {
+                                            todo.isCompleted ?
+                                                <button className='text-base font-semibold'>
+                                                    Completed on
+                                                    <br />
+                                                    {todo.completedTime}
+                                                </button>
+                                                :
+                                                <button onClick={() => handleComplete(todo._id)} className='btn btn-primary btn-outline'>Complete</button>
+                                        }
                                         <button onClick={() => handleDelete(todo._id)} className='btn btn-error btn-outline'>Delete</button>
                                     </td>
                                 </tr>)
