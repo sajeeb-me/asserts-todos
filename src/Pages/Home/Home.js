@@ -19,8 +19,7 @@ const Home = () => {
             description,
             isCompleted: false
         }
-        console.log(todo);
-        fetch('http://localhost:5000/todo', {
+        fetch('https://tranquil-thicket-99142.herokuapp.com/todo', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

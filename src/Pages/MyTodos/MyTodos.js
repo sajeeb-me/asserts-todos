@@ -7,7 +7,7 @@ const MyTodos = () => {
     const [updatingTodo, setUpdatingTodo] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:5000/todo')
+        fetch('https://tranquil-thicket-99142.herokuapp.com/todo')
             .then(res => res.json())
             .then(data => {
                 // console.log(data);
@@ -16,7 +16,7 @@ const MyTodos = () => {
     }, [todos])
 
     const handleDelete = id => {
-        fetch(`http://localhost:5000/todo/${id}`, {
+        fetch(`https://tranquil-thicket-99142.herokuapp.com/todo/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json',
@@ -25,14 +25,12 @@ const MyTodos = () => {
             .then(res => res.json())
             .then(data => {
                 toast.info('Deleted todo!')
-                console.log(data);
             })
     }
 
     const handleComplete = id => {
         const time = new Date();
-        console.log(time);
-        fetch(`http://localhost:5000/todo/${id}`, {
+        fetch(`https://tranquil-thicket-99142.herokuapp.com/todo/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-type': 'application/json',

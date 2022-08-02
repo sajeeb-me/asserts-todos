@@ -14,7 +14,7 @@ const UpdateTodoModal = ({ updatingTodo, setUpdatingTodo }) => {
             description,
             isCompleted: false
         }
-        fetch(`http://localhost:5000/todo/update/${updatingTodo._id}`, {
+        fetch(`https://tranquil-thicket-99142.herokuapp.com/todo/update/${updatingTodo._id}`, {
             method: 'PATCH',
             headers: {
                 'Content-type': 'application/json',
