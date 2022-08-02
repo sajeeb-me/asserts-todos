@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const MyTodos = () => {
     const [todos, setTodos] = useState([]);
@@ -11,6 +12,20 @@ const MyTodos = () => {
                 setTodos(data);
             })
     }, [todos])
+
+    const handleDelete = id => {
+        fetch(`http://localhost:5000/todo/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json',
+            },
+        })
+            .then(res => res.json())
+            .then(data => {
+                toast.info('Deleted todo!')
+                console.log(data);
+            })
+    }
     return (
         <section className='bg-slate-100 p-4 lg:p-8 h-screen'>
             <div>
@@ -35,7 +50,7 @@ const MyTodos = () => {
                                     <td>{todo.description}</td>
                                     <td className='flex justify-center gap-4'>
                                         <button className='btn btn-primary btn-outline'>Complete</button>
-                                        <button className='btn btn-error btn-outline'>Delete</button>
+                                        <button onClick={() => handleDelete(todo._id)} className='btn btn-error btn-outline'>Delete</button>
                                     </td>
                                 </tr>)
                             }
