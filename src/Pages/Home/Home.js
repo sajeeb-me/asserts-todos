@@ -13,14 +13,30 @@ const Home = () => {
         const date = e.target.date.value;
         const heading = e.target.heading.value;
         const description = e.target.description.value;
-        const task = {
+        const todo = {
             date,
             heading,
             description,
             isCompleted: false
         }
-        console.log(task);
-        toast.success('Task added successfully!')
+        console.log(todo);
+        fetch('http://localhost:5000/todo', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(todo)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    toast.success('Todo added successfully!')
+                    e.target.reset();
+                }
+                else {
+                    toast.error('Failed to add the Todo!')
+                }
+            })
     }
 
     return (
@@ -41,7 +57,7 @@ const Home = () => {
                             <form onSubmit={handleSubmit}>
                                 <input type="text" name='date' value={todoDate} className="input input-bordered w-full mb-3" disabled />
                                 <input type="text" name='heading' placeholder="Todo Heading" className="input input-bordered w-full mb-3" required />
-                                <input type="text" name='description' placeholder="Description" className="input input-bordered w-full mb-3" required />
+                                <textarea name='description' placeholder="Description" className="input input-bordered w-full mb-3" required />
                                 <input type="submit" value="Add Todo" className="btn btn-primary w-full mb-3" />
                             </form>
                         </div>
