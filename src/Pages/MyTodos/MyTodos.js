@@ -68,7 +68,7 @@ const MyTodos = () => {
                                     <th className={todo.isCompleted ? 'line-through opacity-60' : ''}>{index + 1}</th>
                                     <td className={todo.isCompleted ? 'line-through opacity-60' : ''}>{todo.heading}</td>
                                     <td className={todo.isCompleted ? 'line-through opacity-60' : ''}>{todo.date}</td>
-                                    <td className={todo.isCompleted ? 'line-through opacity-60' : ''}>{todo.description}</td>
+                                    <td className={todo.isCompleted ? 'line-through opacity-60' : ''} title={todo.description}>{todo.description.slice(0, 30)}</td>
                                     <td className='flex justify-center gap-4'>
                                         {
                                             todo.isCompleted ?
